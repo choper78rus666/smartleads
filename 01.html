@@ -93,72 +93,68 @@
     </tbody>
 </table>
 <script>
-/*Хотел сделать с плагином Tablesorter , пока ждал ответ сделал на чистом js*/
-    var tables = document.getElementById('tables');
+        /*Хотел сделать с плагином Tablesorter , пока ждал ответ сделал на чистом js*/
 
-    tables.onclick = function(e) {
-        if (e.target.tagName != 'TH') return;
+        var tables = document.getElementById('tables');
+        tables.onclick = function (e) {
+            if (e.target.tagName != 'TH') return;
+            var dataAtt = e.target.getAttribute('data-type');
+            var attrSort = tables.getAttribute('data-sort') == dataAtt ? 1 : 0;
+            sorttable(e.target.cellIndex, dataAtt, attrSort);
+            tables.setAttribute('data-sort', dataAtt);
+        };
 
-        sorttable(e.target.cellIndex, e.target.getAttribute('data-type'));
-    };
+        function sorttable(colNum, type, attrSort) {
+            var tbody = tables.getElementsByTagName('tbody')[0];
+            var rowsArray = [].slice.call(tbody.rows);
+            var compare;
 
-    function sorttable(colNum, type) {
-        var tbody = tables.getElementsByTagName('tbody')[0];
+            switch (type) {
 
-
-        var rowsArray = [].slice.call(tbody.rows);
-
-
-        var compare;
-
-        switch (type) {
-
-            case 'integer':
-                compare = function(rowA, rowB) {
-                    var a = parseInt(rowA.cells[colNum].innerHTML);
-                    var b = parseInt(rowB.cells[colNum].innerHTML);
-
-                    if(a>b){return 1;}
-                    if(a<b){return -1;}
-                };
-                break;
+                case 'integer':
+                    compare = function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+                    };
+                    break;
 
                 case 'decimal':
-                compare = function(rowA, rowB) {
-                    return parseFloat(rowA.cells[colNum].innerHTML) - parseFloat(rowB.cells[colNum].innerHTML);
-                };
-                break;
+                    compare = function (rowA, rowB) {
+                        return parseFloat(rowA.cells[colNum].innerHTML) - parseFloat(rowB.cells[colNum].innerHTML);
+                    };
+                    break;
 
-            case 'text':
-                compare = function(rowA, rowB) {
-                    return rowA.cells[colNum].innerHTML.localeCompare(rowB.cells[colNum].innerHTML);
-                };
-                break;
+                case 'text':
+                    compare = function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML.localeCompare(rowB.cells[colNum].innerHTML);
+                    };
+                    break;
 
-            case 'date':
-                compare = function(rowA, rowB) {
-                    var re = /(\w+)[.](\w+)[.](\w+)/;
-                    a = Date.parse(rowA.cells[colNum].innerHTML.replace(re, "$3-$2-$1"));
-                    b = Date.parse(rowB.cells[colNum].innerHTML.replace(re, "$3-$2-$1"));
-                    console.log(a);
-                    return a - b;
-                };
-                break;
+                case 'date':
+                    compare = function (rowA, rowB) {
+                        var re = /(\w+)[.](\w+)[.](\w+)/;
+                        a = Date.parse(rowA.cells[colNum].innerHTML.replace(re, "$3-$2-$1"));
+                        b = Date.parse(rowB.cells[colNum].innerHTML.replace(re, "$3-$2-$1"));
+                        return a - b;
+                    };
+                    break;
+            }
+
+
+            if (attrSort == 1) {
+                rowsArray = rowsArray.reverse();
+            } else {
+                rowsArray.sort(compare);
+            }
+
+
+            tables.removeChild(tbody);
+
+            for (var i = 0; i < rowsArray.length; i++) {
+                tbody.appendChild(rowsArray[i]);
+            }
+
+            tables.appendChild(tbody);
         }
-
-
-        rowsArray.sort(compare);
-
-
-        tables.removeChild(tbody);
-
-
-        for (var i = 0; i < rowsArray.length; i++) {
-            tbody.appendChild(rowsArray[i]);
-        }
-
-        tables.appendChild(tbody);
-    }
 </script>
 </body>
 </html>
