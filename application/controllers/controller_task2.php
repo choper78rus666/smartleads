@@ -18,4 +18,14 @@ class Controller_Task2 extends Controller
     {
         $this->view->generate('task2_view.php', 'template_view.php');
     }
+
+    function action_send()
+    {
+        if($_POST){
+            $post = $_POST;
+            $data = "Сообщение отправлено";
+        }
+
+        $this->view->generate('task2_send_view.php', 'template_view.php', $data);
+    }
 }
