@@ -23,3 +23,4 @@ do {
     echo $chunkAmount . "\n";
 } while($chunkAmount < chunkAmount);
 fclose($handle);
+echo "ok";

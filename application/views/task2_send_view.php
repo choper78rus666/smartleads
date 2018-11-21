@@ -1,1 +1,1 @@
-<h3><? echo $data ? $data : ''; ?></h3>
+<h1><? echo $data; ?></h1>

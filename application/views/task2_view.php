@@ -2,7 +2,7 @@
 
     <p>Заполните свои контактные данные, для связи</p>
 
-    <form action="task2/send" method="post">
+    <form action="#" id="sender" method="post">
         <label>Введите имя</label>
         <br>
         <input id="user_name" type="name" name="user" required>
@@ -16,8 +16,9 @@
         <br>
         <textarea id="text" rows="5" type="text" name="text" required></textarea>
         <br>
-        <input type="submit" id="button" value="Отправить" disabled>
+        <input type="button" id="button" value="Отправить" disabled>
     </form>
+<h3>
 <script>
     $(document).ready(function() {
         function checkValid(){
@@ -40,6 +41,31 @@
 
         $('#email').on('keyup',function() {
             checkValid();
+        });
+
+        $('#button').on('click', function () {
+
+            var send_data = {
+                user: $('#user_name').val(),
+                email: $('#email').val(),
+                text: $('#text').val()
+            };
+
+            send_data = 'send_data=' + JSON.stringify(send_data);
+
+            $.ajax({
+                type: "POST",
+                url: "/task2/send",
+                data: send_data,
+                async: true,
+                    success : function(result){
+                    if(result == "1"){
+                        document.location.replace("/task2/ok");
+                    } else {
+                        document.location.replace("/task2/err");
+                    }
+                }
+            });
         });
 
     });

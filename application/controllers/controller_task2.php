@@ -21,11 +21,23 @@ class Controller_Task2 extends Controller
 
     function action_send()
     {
-        if($_POST){
-            $post = $_POST;
-            $data = "Сообщение отправлено";
+        $result = null;
+        if($_POST && $_POST['send_data']){
+            $post = json_decode($_POST['send_data'], true);
+            $result = $this->model->send_message($post);
         }
 
+        $data = $result ? "1" : "0";
+        echo $data;
+    }
+
+    function action_ok(){
+        $data = "Сообщение отправлено";
+        $this->view->generate('task2_send_view.php', 'template_view.php', $data);
+    }
+
+    function action_err(){
+        $data = "Ошибка! Повторите отправку";
         $this->view->generate('task2_send_view.php', 'template_view.php', $data);
     }
 }
