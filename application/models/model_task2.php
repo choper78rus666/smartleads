@@ -21,6 +21,10 @@ class Model_Task2 extends Model
         $name = $this->get_validate($post['user']);
         $email = $this->get_validate($post['email']);
         $text = $this->get_validate($post['text']);
+        $sanitized_a = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (!filter_var($sanitized_a, FILTER_VALIDATE_EMAIL) || $name == '' || $text == ''){
+            return false;
+        }
 
         $params = [
             'name' => $name,

@@ -7,7 +7,7 @@ class Db {
     private $pwd = '';
 
     function connectDB(){
-        $conection = new PDO("mysql:host=$this->servername;dbname=$this->db_name", $this->username, $this->pwd);
+        $conection = new PDO("mysql:host=$this->servername;dbname=$this->db_name",$this->username,$this->pwd);
 
         $sql = "CREATE TABLE IF NOT EXISTS messages (
         id INT AUTO_INCREMENT PRIMARY KEY,

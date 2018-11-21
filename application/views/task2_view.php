@@ -27,23 +27,41 @@
                 if(pattern.test($('#email').val())){
                     $('#email').css({'border' : '1px solid #569b44'});
                     $('#valid').text('Верно');
-                    $('#button').removeAttr('disabled');
                 } else {
                     $('#email').css({'border' : '1px solid #ff0000'});
                     $('#valid').text('Не верно');
                     $('#button').attr('disabled','');
                 }
+
+                if($('#user_name').val() != '' && $('#email').val() != '' && $('#text').val() != ''){
+                    $('#button').removeAttr('disabled');
+                } else{
+                    $('#button').attr('disabled','');
+                }
+
             } else {
                 $('#email').css({'border' : '1px solid #ff0000'});
                 $('#valid').text('Поле email не должно быть пустым');
             }
         }
 
+        $('#user_name').on('keyup',function() {
+            checkValid();
+        });
         $('#email').on('keyup',function() {
+            checkValid();
+        });
+        $('#text').on('keyup',function() {
             checkValid();
         });
 
         $('#button').on('click', function () {
+
+                if($('#user_name').val() == '' || $('#email').val() == '' || $('#text').val() == ''){
+                    alert('заполните все поля');
+                    $('#button').attr('disabled','');
+                    return;
+                }
 
             var send_data = {
                 user: $('#user_name').val(),
