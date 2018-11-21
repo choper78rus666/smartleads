@@ -1,1 +1,1 @@
-<h1><? echo $data; ?></h1>
+<h1><?php echo $data; ?></h1>
