@@ -14,7 +14,7 @@
         <br>
         <label>Сообщение</label>
         <br>
-        <textarea id="text" rows="5" type="text" name="text" required></textarea>
+        <textarea id="text" rows="5" type="text" name="text" maxlength="300" required></textarea>
         <br>
         <input type="button" id="button" value="Отправить" disabled>
     </form>

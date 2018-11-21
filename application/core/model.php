@@ -12,10 +12,12 @@ class Model
 	*/
 
     public $db;
+    public $file;
 
     function __construct()
     {
         $this->db = new Db();
+        $this->file = new File();
     }
 
 	// метод выборки данных

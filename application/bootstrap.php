@@ -5,6 +5,7 @@ require_once 'core/model.php';
 require_once 'core/view.php';
 require_once 'core/controller.php';
 require_once 'core/db.php';
+require_once 'core/file.php';
 
 /*
 Здесь обычно подключаются дополнительные модули, реализующие различный функционал:
