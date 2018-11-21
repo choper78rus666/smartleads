@@ -7,8 +7,13 @@
  */
 class Model_Task2 extends Model
 {
-    private function get_validate($str){
-        return $str;
+    private function get_validate($text){
+        $text = addslashes($text);
+        $text = htmlspecialchars(trim($text));
+        $text = preg_replace("/'/", "", $text);
+        $text = preg_replace("/&quot;/", "", $text);
+        $text = stripslashes($text);
+        return $text;
     }
 
     public function send_message($post){
